@@ -1,0 +1,21 @@
+name: 'Terraform GitHub Actions'
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.tf'
+jobs:
+  terraform:
+    name: 'Terraform Init, Validate and Test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: 'Terraform Init and Validate'
+        run: |
+          apt-get update
+          apt-get install -y make git shellcheck curl unzip
+          make test
+        env:
+          NO_PROMPT: true
